@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block title %}Task MG{% endblock title %}
+{% block content %}
+    <header class="into-header" style="background-image: url('/static/img/l_bg.jpg');">
+        <div class="container">
+            <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1 class="wh t-bold">Tasks MG</h1>
+                    <hr class="pretty-border">
+                    <span class="sub-text">Modern web task management service for create/manage tasks and build own team</span>
+                    <div class="strut"></div>
+                    <span>
+                        <a href="#" class="btn btn-block btn-social btn-facebook">
+                            <i class="fa fa-facebook-official"></i> Sign in with Facebook
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        </div>
+    </header>
+    <div class="container" ng-app="landing">
+        <landing-page></landing-page>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <p>Copyright © njuice 2015</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+{% endblock content %}
+{% block extra_footer %}<script src="{% static 'js/landing.js' %}"></script>{% endblock extra_footer %}
