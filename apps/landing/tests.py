@@ -18,6 +18,7 @@ class LandingViewTests(TestCase):
             Page must contain dummy call-to-action button
             Show page only for non-authorized users
         """
+
         # Show page only for non-authorized users
         request = self.factory.get(reverse('landing:index'))
         request.user = AnonymousUser()
