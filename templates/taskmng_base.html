@@ -41,10 +41,10 @@
                 <div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
                     <ul class="nav navbar-nav">
                         <li>
-                            <a href="/tasks/">Tasks</a>
+                            <a href="{% url 'taskmng:tasks' %}">Tasks</a>
                         </li>
                         <li>
-                            <a href="/team/">Team</a>
+                            <a href="#">Team</a>
                         </li>
                         <li>
                             <a href="#"><span class="glyphicon glyphicon-user"> {{ user.first_name }} {{ user.last_name }}</span></a>
@@ -74,6 +74,7 @@
         <script src="{% static 'js/modal.js' %}"></script>
         <script src="{% static 'js/angular-route.js' %}"></script>
         <script src="{% static 'js/angular-notify.js' %}"></script>
+        <script src="{% static 'js/tasks.js' %}"></script>
 
         {% block extra_footer %}{% endblock extra_footer %}
     </body>
