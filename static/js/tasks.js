@@ -44,7 +44,7 @@
 
     }]);
 
-
+    // Main app directive
     app.directive('tasksManagement', function(){
         return {
             restrict: 'E',
@@ -55,6 +55,24 @@
                 $scope.new_task = {};
                 $scope.tasks = [];
 
+
+                /**
+                 * Tasks ui.sortable drag & drop config
+                 */
+                $scope.draggable = {
+                    stop: function(e, ui){
+                        var tasks = [];
+                        angular.extend(tasks, $scope.tasks);
+                        var i = 0,
+                            max = tasks.length;
+                        for(; i < max; i += 1){
+                            tasks[i]['priority'] = i + 1;
+                            Tasks.save(tasks[i]);
+                        }
+                        $scope.tasks.length = 0;
+                        angular.extend($scope.tasks, tasks);
+                    }
+                };
 
                  /**
                  *  Add new task
@@ -74,6 +92,24 @@
                     $scope.new_task = {};
                 };
 
+                /**
+                 *  Remove current task
+                 *  @param task
+                 */
+                this.remove = function(task){
+                    if(task.id) {
+                        $scope.tasks.splice($scope.tasks.indexOf(task), 1);
+                        Tasks.remove(task.id);
+                    }
+                };
+
+                /**
+                 * Save item changes
+                 * @param task
+                 */
+                this.edit = function(task){
+                    Tasks.save(task);
+                };
 
                 var that = this;
 
