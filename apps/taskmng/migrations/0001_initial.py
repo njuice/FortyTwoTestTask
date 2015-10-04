@@ -8,7 +8,6 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        """
         # Adding model 'Tasks'
         db.create_table(u'taskmng_tasks', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -18,8 +17,6 @@ class Migration(SchemaMigration):
             ('completed', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('taskmng', ['Tasks'])
-        """
-        pass
 
     def backwards(self, orm):
         # Deleting model 'Tasks'
