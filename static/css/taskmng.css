@@ -64,3 +64,11 @@ a.team-btn {
     padding-top: 50px;
     color: dimgray;
 }
+
+.ng-invalid.ng-dirty {
+    border-color: red;
+}
+
+.nt-error {
+    color: red;
+}

@@ -3,11 +3,17 @@
     <form name="newTaskForm" class="form-inline" ng-submit="newTaskForm.$valid && task_item.add()"  novalidate>
         <div class="form-group" style="width: 30%;">
             <label class="sr-only" for="textField">Task</label>
-            <input style="width: 100%;" type="text" id="textField" class="form-control" ng-model="new_task.text" placeholder="Type your task here..." required /><br />
+            <input style="width: 100%;" ng-change="validateForm(newTaskForm)"  name="task" type="text" id="textField" class="form-control" ng-model="new_task.text" placeholder="Type your task here..." required /><br />
         </div>
         <div class="form-group">
             <label class="sr-only" for="dateField">Due to</label>
-            <input type="date" id="dateField" class="form-control" ng-model="new_task.due_to" title="Due to" required /><br />
+            <!--<input type="date" id="dateField" class="form-control" ng-model="new_task.due_to" title="Due to" required /><br />-->
+            <div class="input-group">
+                <input type="date" name="date" ng-change="validateForm(newTaskForm)" class="form-control ng-valid ng-isolate-scope ng-valid-required ng-touched ng-valid-date" datepicker-popup="" ng-model="new_task.due_to" is-open="status.opened" min-date="minDate" ng-required="true" close-text="Close" required="required" style=""><br />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="datepicker_toggle($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+            </div>
         </div>
         <div class="form-group">
             <input id="addButton" type="submit" class="btn btn-info" value="+" />
@@ -36,7 +42,7 @@
                 <td>
                     <div class="input-group due">
                         <span class="input-group-addon" id="basic-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                        <input type="date" class="form-control" ng-change="task_item.edit(task)" ng-model="task.due_to" aria-describedby="basic-addon">
+                        <input type="date" class="form-control" ng-class="{'ng-dirty ng-invalid': task.due_to < minDate}" ng-change="task.due_to > minDate && task_item.edit(task)" ng-model="task.due_to" aria-describedby="basic-addon">
                     </div>
                 </td>
                 <td>

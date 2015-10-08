@@ -1,6 +1,6 @@
 
 (function(){
-    var app = angular.module('tasks', ["ngCookies", "ngResource", "pusher-angular", "ui.sortable", "ui.bootstrap", "cgNotify"]);
+    var app = angular.module('tasks', ["ngCookies", "ngResource", "pusher-angular", "ui.sortable", "cgNotify", "ui.bootstrap.datepicker"]);
 
     // Config $http for django backend
     app.config(function($httpProvider , $interpolateProvider, $resourceProvider){
@@ -49,12 +49,15 @@
         return {
             restrict: 'E',
             templateUrl: '/static/html/tasks_manager.html',
-            controller: function($log, $scope, $filter, $http, $pusher, Tasks){
+            controller: function($log, $scope, $filter, $http, $pusher, notify, Tasks){
 
                 this.current_user = null;
                 $scope.new_task = {};
                 $scope.tasks = [];
+                $scope.status = {};
+                $scope.status.opened = false;
 
+                $scope.minDate = new Date();
 
                 /**
                  * Tasks ui.sortable drag & drop config
@@ -90,6 +93,7 @@
                         }
                     });
                     $scope.new_task = {};
+                    $scope.newTaskForm.$setPristine(true)
                 };
 
                 /**
@@ -111,7 +115,30 @@
                     Tasks.save(task);
                 };
 
+                /**
+                 * Add new task form validation
+                 * @param newTaskForm
+                 */
+                $scope.validateForm = function(newTaskForm){
+                    notify.closeAll();
+                    if( newTaskForm.$invalid &&
+                        newTaskForm.task.$invalid &&
+                        !newTaskForm.task.$pristine) {
+                         notify({message: 'Task text is required!', templateUrl: '/static/html/angular-notify.html', classes: 'nt-error'});
+                    }
+
+                    if( newTaskForm.$invalid &&
+                        newTaskForm.date.$invalid &&
+                        !newTaskForm.date.$pristine){
+                        notify({message: 'Date field can\'t be empty!', templateUrl: '/static/html/angular-notify.html', classes: 'nt-error'});
+                    }
+                };
+
                 var that = this;
+
+                $scope.datepicker_toggle = function($event) {
+                    $scope.status.opened = true;
+                };
 
                 // Listen for tasks changes with pusher
                 var client = new Pusher('e749c59b174735416abe');
@@ -186,4 +213,5 @@
             controllerAs: 'task_item'
         };
     });
+
 })();

@@ -23,14 +23,13 @@ def pusher_worker(instance, created=None):
     data = unicode(data, 'utf-8')
     pusher.trigger(u'tasks-channel', u'tasks-changed', data)
 
-"""
+
 @receiver(m2m_changed, sender=Tasks.assigned_to.through)
 def related_changed(sender, **kwargs):
     if kwargs['action'] == 'post_add':
         instance = kwargs['instance']
         pusher_worker(instance)
     pass
-"""
 
 
 @receiver(post_save, sender=Tasks)

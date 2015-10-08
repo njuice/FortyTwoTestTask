@@ -23,10 +23,17 @@ module.exports = function(config) {
       'static/js/angular-cookies.min.js',
       'static/js/angular-resource.min.js',
       'static/js/sortable.js',
+      'static/js/dateparser.js',
+      'static/js/position.js',
+      'static/js/datepicker.js',
+      'static/js/angular-notify.js',
       'static/html/*.html',
+      'static/html/datepicker/*.html',
       'static/js/angular-mocks.js',
       'apps/landing/static/js/landing.js',
-      'apps/landing/static/js/*Spec.js'
+      'apps/landing/static/js/*Spec.js',
+      'apps/taskmng/static/js/tasks.js',
+      'apps/taskmng/static/js/*Spec.js'
     ],
 
 
@@ -38,7 +45,8 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'static/html/*.html': ['ng-html2js']
+      'static/html/*.html': ['ng-html2js'],
+      'static/html/datepicker/*.html': ['ng-html2js']
     },
 
     ngHtml2JsPreprocessor: {
@@ -83,4 +91,4 @@ module.exports = function(config) {
     // if true, Karma captures browsers, runs the tests and exits
     singleRun: false
   })
-}
+};
