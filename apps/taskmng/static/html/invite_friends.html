@@ -1,0 +1,15 @@
+<ul class="invitable" ng-model="invitable_friends.list">
+    <div ng-show="invitable_friends.list.length==0"><img class="center-block" src="/static/img/loader.gif"></div>
+    <li class="media inv-fr" ng-repeat="friend in invitable_friends.list">
+        <div class="media-left">
+            <img class="round" src="{{ friend.picture.data.url }}">
+        </div>
+        <div class="media-body">
+            <div>{{ friend.name }}</div>
+            <div>
+                <button class="btn btn-xs btn-primary" ng-click="invitable_friends.invite(friend)">Invite</button>
+            </div>
+        </div>
+
+    </li>
+</ul>

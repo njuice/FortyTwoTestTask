@@ -48,3 +48,32 @@ class TasksResource(ModelResource):
             'owner': ALL_WITH_RELATIONS,
             'assigned_to': ALL_WITH_RELATIONS,
         }
+
+
+class TeammatesResource(ModelResource):
+    user = fields.ForeignKey(UserResource, attribute='user', full=True)
+
+    class Meta:
+        queryset = Teammates.objects.all()
+        resource_name = 'teammates'
+        allowed_methods = ['get', 'post', 'put', 'delete']
+        always_return_data = True
+        authentication = Authentication()
+        authorization = Authorization()
+
+
+class TeamsResource(ModelResource):
+    owner = fields.ForeignKey(UserResource, attribute='owner', full=True)
+    teammates = fields.ToManyField(TeammatesResource, 'teammates_set',
+                                   full=True)
+
+    class Meta:
+        queryset = Teams.objects.all()
+        resource_name = 'teams'
+        allowed_methods = ['get', 'post', 'delete']
+        always_return_data = True
+        authentication = Authentication()
+        authorization = Authorization()
+        filtering = {
+            'owner': ALL_WITH_RELATIONS,
+        }

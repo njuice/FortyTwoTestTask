@@ -1,0 +1,22 @@
+{% extends "taskmng_base.html" %}
+{% load staticfiles %}
+{% block title %}Tasks{% endblock title %}
+{% block content %}
+    <div class="container" ng-app="team">
+        <div class="strut"></div>
+        <div class="row">
+            <div class="col-lg-9">
+                <hr/>
+                <team-manage></team-manage>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Invite your FB friends</div>
+                    <div class="panel-body">
+                        <invite-friends></invite-friends>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

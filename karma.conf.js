@@ -29,10 +29,14 @@ module.exports = function(config) {
       'static/js/angular-notify.js',
       'static/html/*.html',
       'static/html/datepicker/*.html',
+      'static/html/modal/*.html',
       'static/js/angular-mocks.js',
+      'static/js/modal.js',
+      'static/js/angular-route.js',
+      'static/js/ngFacebook.js',
       'apps/landing/static/js/landing.js',
       'apps/landing/static/js/*Spec.js',
-      'apps/taskmng/static/js/tasks.js',
+      'apps/taskmng/static/js/*.js',
       'apps/taskmng/static/js/*Spec.js'
     ],
 
@@ -46,7 +50,8 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
       'static/html/*.html': ['ng-html2js'],
-      'static/html/datepicker/*.html': ['ng-html2js']
+      'static/html/datepicker/*.html': ['ng-html2js'],
+      'static/html/modal/*.html': ['ng-html2js']
     },
 
     ngHtml2JsPreprocessor: {

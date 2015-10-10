@@ -63,7 +63,7 @@ angular.module('ui.bootstrap.modal', [])
     return {
       restrict: 'EA',
       replace: true,
-      templateUrl: 'template/modal/backdrop.html',
+      templateUrl: '/static/html/modal/backdrop.html',
       compile: function (tElement, tAttrs) {
         tElement.addClass(tAttrs.backdropClass);
         return linkFn;
@@ -93,7 +93,7 @@ angular.module('ui.bootstrap.modal', [])
       replace: true,
       transclude: true,
       templateUrl: function(tElement, tAttrs) {
-        return tAttrs.templateUrl || 'template/modal/window.html';
+        return tAttrs.templateUrl || '/static/html/modal/window.html';
       },
       link: function (scope, element, attrs) {
         element.addClass(attrs.windowClass || '');

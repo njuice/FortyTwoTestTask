@@ -1,0 +1,43 @@
+<div ng-if="team == null">
+<div>
+    You have no team yet. Create one:
+</div>
+<div class="strut"></div>
+<div>
+    <form class="form-inline" name="newTeamForm" class="form-inline" ng-submit="addNewTeam()"  novalidate>
+        <div class="form-group">
+            <input type="text" name="name" class="form-control" placeholder="Team name" ng-model="new_team.name" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add</button>
+        </div>
+    </form>
+</div>
+
+</div>
+<div ng-if="team != null">
+    <h3>{{ team.name }}</h3>
+    <div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Choose friend </h3>
+        </div>
+        <div class="modal-body">
+            <span ng-show="!items.length">We are sorry, but there are no yours FB friends that joined Task MG :( Please, invite someone from list on the right first</span>
+            <ul>
+                <li ng-repeat="item in items">
+                    {{ item.name }} <button class="btn btn-xs btn-primary" ng-click="addToTeam(item)">+</button>
+                </li>
+            </ul>
+        </div>
+        <div class="modal-footer">
+            <!--<button class="btn btn-primary" ng-click="ok()">OK</button>-->
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button class="btn btn-primary" ng-click="open()">Add new user</button>
+    </div>
+    <hr/>
+    <div ng-repeat="tm in teammates">{{ tm.user.first_name }} {{ tm.user.last_name }} <i class="remove glyphicon glyphicon-remove-circle remove_member" ng-click="remove(tm)"></i></div>
+</div>
