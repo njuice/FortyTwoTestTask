@@ -44,20 +44,90 @@
 
     }]);
 
+    app.factory('Teams', ['$http', function($http){
+
+        var Teams = function(data){
+            angular.extend(this, data);
+        };
+
+        Teams.get = function(ownerId) {
+            return $http.get('/api/v1/teams/?format=json&owner=' + ownerId);
+        };
+        return Teams;
+
+    }]);
+
+    // Directives team member dng
+    app.directive('draggable', function() {
+        return {
+            restrict:'A',
+            link: function(scope, element, attrs) {
+                if(element.draggable) {
+                    element.draggable({
+                        revert: true
+                    });
+                }
+            }
+        };
+    });
+
+    app.directive('droppable', function($compile, notify, $rootScope, $filter, Tasks) {
+        return {
+            restrict: 'A',
+                link: function(scope,element,attrs){
+                    element.droppable({
+                    drop:function(event, ui) {
+
+                        var dragEl = angular.element(ui.draggable),
+                            dropEl = angular.element(this);
+
+                        if(dragEl && dropEl){
+                            var teammate = dragEl.scope()['teammate'],
+                                task = dropEl.scope()['task'];
+                            if(teammate && task) {
+
+                                var found = $filter("filter")($rootScope.tasks, {id: task.id}, true);
+                                if (found.length) {
+                                    var found_assigned = $filter("filter")(task.assigned_to, {id: teammate.user.id}, true);
+                                    if(!found_assigned.length) {
+                                        task.assigned_to.push(teammate.user);
+                                        $rootScope.tasks[found] = task;
+                                        Tasks.save(task).success(function(data){
+                                            notify({message: 'Task assigned!', templateUrl: '/static/html/angular-notify.html'});
+                                        });
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                });
+            }
+        };
+    });
+
     // Main app directive
     app.directive('tasksManagement', function(){
         return {
             restrict: 'E',
             templateUrl: '/static/html/tasks_manager.html',
-            controller: function($log, $scope, $filter, $http, $pusher, notify, Tasks){
+            controller: function($log, $scope, $filter, $http, $pusher, notify, Tasks, Teams){
 
                 this.current_user = null;
                 $scope.new_task = {};
                 $scope.tasks = [];
+                $scope.team = null;
+                $scope.teammates = [];
                 $scope.status = {};
                 $scope.status.opened = false;
-
                 $scope.minDate = new Date();
+
+                /**
+                 * Toggle team list
+                 */
+                $scope.showTeam = function(){
+                    $scope.show_team = !$scope.show_team;
+                };
 
                 /**
                  * Tasks ui.sortable drag & drop config
@@ -195,6 +265,13 @@
                     // Filter tasks by current
                     Tasks.getAll(data[0]['pk']).then(function(response) {
                         $scope.tasks = response.data.objects;
+                    });
+
+                    Teams.get(data[0]['pk']).then(function(response) {
+                        $scope.team = response.data.objects[0];
+                        if($scope.team && $scope.team.id) {
+                            $scope.teammates = $scope.team['teammates'];
+                        }
                     });
 
                 });

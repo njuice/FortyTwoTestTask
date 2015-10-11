@@ -23,6 +23,7 @@
         }(document, 'script', 'facebook-jssdk'));
     });
 
+    // Api factories
     app.factory('Teams', ['$http', function($http){
 
         var Teams = function(data){
@@ -77,11 +78,7 @@
 
     }]);
 
-    app.service("teammatesList", function TeammatesList(){
-        var teammates = this;
-        teammates.list = [];
-    });
-
+    // Directive for FB intable friends list
     app.directive('inviteFriends', function (notify) {
         return {
             restrict: 'E',
@@ -144,18 +141,22 @@
         };
     });
 
+    //Main directive
     app.directive('teamManage', function(){
         return {
             restrict: 'E',
             templateUrl: '/static/html/team_manage.html',
             controller: function($log, $scope, $http, $modal, Teams, Teammates){
+
                 this.current_user = null;
                 $scope.team = null;
                 $scope.new_team = {};
                 $scope.teammates = [];
                 $scope.items_invitable = [];
 
-
+                /**
+                 * Get available friends list for adding to team
+                 */
                 this.getInvitable = function(){
                     $http.get('/tm_invite/', {}).success(function(data){
                         var i = 0,
@@ -173,6 +174,9 @@
 
                 var that = this;
 
+                /**
+                 * Add new team
+                 */
                 $scope.addNewTeam = function(){
                     $scope.new_team.owner = that.current_user;
                     $scope.new_team.teammates = [];
@@ -181,12 +185,18 @@
                     $scope.new_team = {};
                 };
 
+                /**
+                 * Remove teammates
+                 * @param tm
+                 */
                 $scope.remove = function(tm){
                     Teammates.remove(tm).then(function(response){
                         $scope.teammates.splice($scope.teammates.indexOf(tm), 1);
                         that.getInvitable();
                     })
                 };
+
+                // Get current user and  teammates
                 $http.get('/current_user/').success(function(data){
                     that.current_user = data[0]['fields'];
                     that.current_user.id = data[0]['pk'];
@@ -200,8 +210,6 @@
                 });
 
                 // Modal window settings
-
-
                 $scope.animationsEnabled = true;
 
                 $scope.open = function (size) {
@@ -226,7 +234,6 @@
                 $scope.toggleAnimation = function () {
                     $scope.animationsEnabled = !$scope.animationsEnabled;
                 };
-
 
             },
             controllerAs: 'team-manage'

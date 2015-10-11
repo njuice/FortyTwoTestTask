@@ -61,6 +61,11 @@ class TeammatesResource(ModelResource):
         authentication = Authentication()
         authorization = Authorization()
 
+    def dehydrate(self, bundle):
+        bundle.data['uid'] = bundle.obj.user.\
+            social_auth.get(provider='facebook').uid
+        return bundle
+
 
 class TeamsResource(ModelResource):
     owner = fields.ForeignKey(UserResource, attribute='owner', full=True)

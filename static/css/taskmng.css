@@ -72,3 +72,19 @@ a.team-btn {
 .nt-error {
     color: red;
 }
+
+.tm_item {
+    width: 100px;
+    text-align: center;
+}
+
+.tm-caption {
+    font-size: 12px;
+    color: dimgray;
+}
+
+.tm-assign-help {
+    margin-top: 10px;
+    color: dimgray;
+    font-size: 12px;
+}

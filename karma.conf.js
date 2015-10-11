@@ -33,6 +33,7 @@ module.exports = function(config) {
       'static/js/angular-mocks.js',
       'static/js/modal.js',
       'static/js/angular-route.js',
+      'static/js/angular-route.js',
       'static/js/ngFacebook.js',
       'apps/landing/static/js/landing.js',
       'apps/landing/static/js/*Spec.js',

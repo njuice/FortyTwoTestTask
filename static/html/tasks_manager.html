@@ -20,6 +20,19 @@
         </div>
   </form>
 </div>
+<div class="strut"></div>
+<div>
+    <a href="#" ng-click="showTeam()" class="team-btn"><span class="glyphicon glyphicon-th"></span> Teammates</a>
+</div>
+<div ng-model="teammates" ng-show="show_team">
+    <div ng-show="teammates.length == 0" class="tm-caption"> You haven't teammates yet. Please add someone to you team first.</div>
+    <div ng-show="teammates.length!= 0" class="tm-assign-help"><span class="glyphicon glyphicon-hand-down" style="vertical-align: middle;"> </span> For assign task to user - drug and drop user image on task name.</div>
+    <div class="strut"></div>
+    <div draggable ng-repeat="teammate in teammates" class="tm_item">
+        <img style="border-radius: 100px" src="http://graph.facebook.com/{{ teammate.uid }}/picture" tooltip="{{ teammate.user.first_name }} {{ teammate.user.last_name }}">
+        <div class="tm-caption">{{ teammate.user.first_name }} {{ teammate.user.last_name }}</div>
+    </div>
+</div>
 <hr/>
 <div>
     <table class="table">
@@ -33,7 +46,7 @@
             </tr>
         </thead>
         <tbody ui-sortable="draggable" ng-model="tasks">
-            <tr class="task" ng-repeat="task in tasks | orderBy:'priority'">
+            <tr class="task" droppable ng-repeat="task in tasks | orderBy:'priority'">
                 <td>
                     <input type="hidden" ng-model="task.priority">
                     <input type="checkbox" ng-model="task.completed" ng-change="task_item.edit(task)">
