@@ -76,6 +76,8 @@ a.team-btn {
 .tm_item {
     width: 100px;
     text-align: center;
+    display: inline-block;
+    vertical-align: top;
 }
 
 .tm-caption {
