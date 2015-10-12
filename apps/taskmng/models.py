@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 import datetime
 
 
-class Tasks(models.Model):
+class Task(models.Model):
     class Meta:
         app_label = 'taskmng'
     owner = models.ForeignKey(User)
@@ -15,7 +15,7 @@ class Tasks(models.Model):
                                          blank=True)
 
 
-class Teams(models.Model):
+class Team(models.Model):
     class Meta:
         app_label = 'taskmng'
     owner = models.ForeignKey(User)
@@ -23,8 +23,8 @@ class Teams(models.Model):
     created_at = models.DateField(default=datetime.datetime.now)
 
 
-class Teammates(models.Model):
+class Teammate(models.Model):
     class Meta:
         app_label = 'taskmng'
-    team = models.ForeignKey(Teams)
+    team = models.ForeignKey(Team)
     user = models.ForeignKey(User)

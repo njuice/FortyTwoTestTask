@@ -14,3 +14,5 @@ build
 *.dat
 .env
 node_modules
+.coverage
+htmlcov

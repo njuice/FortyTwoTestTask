@@ -38,7 +38,7 @@ class TasksResource(ModelResource):
                                      full=True)
 
     class Meta:
-        queryset = Tasks.objects.all()
+        queryset = Task.objects.all()
         resource_name = 'items'
         allowed_methods = ['get', 'post', 'put', 'delete']
         always_return_data = True
@@ -54,7 +54,7 @@ class TeammatesResource(ModelResource):
     user = fields.ForeignKey(UserResource, attribute='user', full=True)
 
     class Meta:
-        queryset = Teammates.objects.all()
+        queryset = Teammate.objects.all()
         resource_name = 'teammates'
         allowed_methods = ['get', 'post', 'put', 'delete']
         always_return_data = True
@@ -69,11 +69,11 @@ class TeammatesResource(ModelResource):
 
 class TeamsResource(ModelResource):
     owner = fields.ForeignKey(UserResource, attribute='owner', full=True)
-    teammates = fields.ToManyField(TeammatesResource, 'teammates_set',
+    teammates = fields.ToManyField(TeammatesResource, 'teammate_set',
                                    full=True)
 
     class Meta:
-        queryset = Teams.objects.all()
+        queryset = Team.objects.all()
         resource_name = 'teams'
         allowed_methods = ['get', 'post', 'delete']
         always_return_data = True

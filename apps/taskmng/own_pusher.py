@@ -51,10 +51,3 @@ class MyPusher:
                                          sign)
 
         requests.post(url, data=data, headers=self.headers)
-
-
-if __name__ == '__main__':
-    pusher = MyPusher(u'131903',
-                      u'e749c59b174735416abe',
-                      u'e6ac5822e09619a965fd')
-    pusher.trigger(u'tasks-channel', u'tasks-changed', '{"some": "data"}')

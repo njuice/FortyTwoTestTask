@@ -62,16 +62,16 @@ def team(request):
 
     # Add new team
     if request.method == 'POST' and 'add_team' in request.POST:
-        new_team = Teams(name=request.POST['name'], owner_id=request.user.id)
+        new_team = Team(name=request.POST['name'], owner_id=request.user.id)
         new_team.save()
 
-    team = Teams.objects.filter(owner_id=request.user.id)
+    team = Team.objects.filter(owner_id=request.user.id)
     team = team[0] if team else team
 
     teammates = []
 
     if team:
-        teammates = Teammates.objects.filter(team=team)
+        teammates = Teammate.objects.filter(team=team)
 
     template = loader.get_template('taskmng/team.html')
     context = RequestContext(request, {
@@ -112,19 +112,18 @@ def invitable(request):
 def team_invitable(request):
 
     # Team realated for user
-    team = Teams.objects.filter(owner_id=request.user.id)
+    team = Team.objects.filter(owner_id=request.user.id)
     team = team[0] if team else team
 
     # Add / Delete item to teammates
     if request.POST and team:
         if request.POST['cmd'] == 'add':
-            print request.POST['item'], team
             tm_user = json.loads(request.POST['item'])
-            teammate = Teammates(user=User.objects.get(pk=tm_user['id']),
-                                 team=team)
+            teammate = Teammate(user=User.objects.get(pk=tm_user['id']),
+                                team=team)
             teammate.save()
         elif request.POST['cmd'] == 'del':
-            teammate = Teammates.objects.get(id=int(request.POST['tmId']))
+            teammate = Teammate.objects.get(id=int(request.POST['tmId']))
             teammate.delete()
 
         return HttpResponse(json.dumps({'result': 'ok'}),
@@ -132,7 +131,7 @@ def team_invitable(request):
 
     teammates_users = [request.user.id]
     if team:
-        teammates = Teammates.objects.filter(team=team)
+        teammates = Teammate.objects.filter(team=team)
         for tm in teammates:
             teammates_users += [tm.user.id]
 
